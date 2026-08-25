@@ -1,0 +1,1 @@
+# Sistemas_Operacionais-2026.2
