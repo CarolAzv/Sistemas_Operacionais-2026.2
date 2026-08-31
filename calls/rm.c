@@ -1,30 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 
-// function to remove a file
-int remove_file(const char* filename) {
-    if (remove(filename) != 0) {
-        perror("Error removing file");
+//chamado do sistema para remover um arquivo
+int remove_arquivo(const char* arquivonome) {
+    if (remove(arquivonome) != 0) {
+        perror("Erro removendo o arquivo");
         return 1;
     }
     return 0;
 }
 
-// driver code
+//código de chamada
 int main(int argc, char* argv[])
 {
-    // Check if filename was given
+    //checa se o nome do arquivo foi dado
     if (argc != 2) {
-        printf("Usage: %s filename\n", argv[0]);
+        printf("Usage: %s arquivonome\n", argv[0]);
         return 1;
     }
 
-    // calling function to remove file
-    if (remove_file(argv[1]) != 0) {
+    //chama a função para remover o arquivo
+    if (remove_arquivo(argv[1]) != 0) {
         return 1;
     }
 
-    printf("Removed '%s'\n", argv[1]);
+    printf("Removido '%s'\n", argv[1]);
 
     return 0;
 }

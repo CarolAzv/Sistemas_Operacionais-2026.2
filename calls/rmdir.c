@@ -3,30 +3,30 @@
 #include <errno.h>
 #include <string.h>
 
-// function to remove a directory
-int remove_directory(const char* dirname) {
-    if (rmdir(dirname) != 0) {
-        perror("Error removing directory");
+//chamada do sistema para remover uma pasta
+int remove_pasta(const char* pastaname) {
+    if (rmdir(pastaname) != 0) {
+        perror("Erro removendo a pasta");
         return 1;
     }
     return 0;
 }
 
-// driver code
+// código de chamada
 int main(int argc, char* argv[])
 {
-    // Check if directory name was given
+    //checa se o nome da pasta foi dado
     if (argc != 2) {
-        printf("Usage: %s dirname\n", argv[0]);
+        printf("Usage: %s pastaname\n", argv[0]);
         return 1;
     }
 
-    // calling function to remove directory
-    if (remove_directory(argv[1]) != 0) {
+    //chama a função para remover a pasta
+    if (remove_pasta(argv[1]) != 0) {
         return 1;
     }
 
-    printf("Removed directory '%s'\n", argv[1]);
+    printf("Pasta removida '%s'\n", argv[1]);
 
     return 0;
 }

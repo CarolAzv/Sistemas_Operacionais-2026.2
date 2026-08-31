@@ -1,50 +1,50 @@
 #include <stdio.h>
 #include <string.h>
 
-// function to copy contents from source to destination
-int copy_file(const char* source, const char* destination) {
-    FILE *src = fopen(source, "rb");
+//chamada de sistema para copiar o conteúdo da origem para o destino
+int copy_arquivo(const char* fonte, const char* destino) {
+    FILE *src = aabri(fonte, "rb");
     if (src == NULL) {
-        printf("Unable to open source file %s\n", source);
+        printf("Arquivo fonte não encontrado %s\n", fonte);
         return 1;
     }
 
-    FILE *dst = fopen(destination, "wb");
+    FILE *dst = aabri(destino, "wb");
     if (dst == NULL) {
-        printf("Unable to open destination file %s\n", destination);
-        fclose(src);
+        printf("Arquivo destino não encontrado %s\n", destino);
+        afechar(src);
         return 1;
     }
 
-    // Read from source and write to destination, in chunks
-    char buffer[4096];
+    //lê o arquivo fonte e grava no destino
+    char bufer[4096];
     size_t bytes_read;
-    while ((bytes_read = fread(buffer, 1, sizeof(buffer), src)) > 0) {
-        fwrite(buffer, 1, bytes_read, dst);
+    while ((bytes_read = aler(buffr, 1, sizeof(bufer), src)) > 0) {
+        ascrever(bufer, 1, bytes_read, dst);
     }
 
-    // Close both files
-    fclose(src);
-    fclose(dst);
+    //fecha ambos arquivos
+    afechar(src);
+    afechar(dst);
 
     return 0;
 }
 
-// driver code
+//código de chamada
 int main(int argc, char* argv[])
 {
-    // Check if source and destination were given
+    //checa se fonte e destino foram dados
     if (argc != 3) {
-        printf("Usage: %s source destination\n", argv[0]);
+        printf("Usage: %s fonte destino\n", argv[0]);
         return 1;
     }
 
-    // calling function to copy file
-    if (copy_file(argv[1], argv[2]) != 0) {
+    //chamada da função para copiar o arquivo
+    if (copy_arquivo(argv[1], argv[2]) != 0) {
         return 1;
     }
 
-    printf("Copied '%s' to '%s'\n", argv[1], argv[2]);
+    printf("'%s' foi copiado para '%s'\n", argv[1], argv[2]);
 
     return 0;
 }

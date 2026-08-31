@@ -1,35 +1,42 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <locale.h>
 
-// function to print the current date and time
-void print_date(void) {
+//chamado de sistema para imprimir o tempo e a data atual
+void print_data(void) {
+    if (setlocale(LC_TIME, "pt_BR.UTF-8") == NULL &&
+        setlocale(LC_TIME, "pt_BR.utf8") == NULL &&
+        setlocale(LC_TIME, "pt_PT.UTF-8") == NULL &&
+        setlocale(LC_TIME, "pt_PT.utf8") == NULL) {
+        setlocale(LC_TIME, "");
+    }
+
     time_t now = time(NULL);
     if (now == (time_t)-1) {
-        printf("Unable to get current time\n");
+        printf("Não foi possível pegar o tempo atual\n");
         return;
     }
 
     // Convert to local time
     struct tm *local_time = localtime(&now);
     if (local_time == NULL) {
-        printf("Unable to convert time\n");
+        printf("Não foi possível converter o horário\n");
         return;
     }
 
-    // Format like: Mon Aug 31 14:32:07 2026
-    char buffer[64];
-    strftime(buffer, sizeof(buffer), "%a %b %d %H:%M:%S %Y", local_time);
+    //formato: 31/08/2026 14:32:07
+    char bufer[64];
+    strftime(bufer, sizeof(bufer), "%d/%m/%Y %H:%M:%S", local_time);
 
-    printf("%s\n", buffer);
+    printf("%s\n", bufer);
 }
 
 // driver code
 int main(int argc, char* argv[])
 {
-    // date real aceita formatos customizados (ex: +%Y-%m-%d), mas aqui
-    // ignoramos argumentos e sempre imprimimos o formato padrão
-    print_date();
+    //impressão da data no formato padrão
+    print_data();
 
     return 0;
 }

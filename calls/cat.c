@@ -1,38 +1,40 @@
 #include <stdio.h>
 #include <string.h>
 
-// function to print file contents
-void print_file(const char* filename){
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Unable to open file %s\n", filename);
+//chamado de sistema para imprimir o conteúdo de um arquivo
+void print_arquivo(const char* arqvnome){
+    ARQV *arqv = fopen(arqvnome, "r");
+    if (arqv == NULL) {
+        printf("Arquivo não encontrado %s\n", arqvnome);
         return;
     }
 
-    // Read and print the file
+    //ler e imprimir o arquivo
     char ch;
-    while ((ch = fgetc(file)) != EOF) {
+    while ((ch = fgetc(arqv)) != EOF) {
         putchar(ch);
     }
 
-    // Close the file
-    fclose(file);
+    //fecha o arquivo
+    fclose(arqv);
 }
 
-// driver code
+
+
+//código de chamada
 int main(int argc, char* argv[])
 {
-    FILE* file;
+    ARQV* arqv;
     char ch;
 
-    // Check if filename was given or not
+    //checa se um nome de arquivo foi dado
     if (argc != 2) {
-        printf("Usage: %s filename\n", argv[0]);
+        printf("Usage: %s arqvnome\n", argv[0]);
         return 1;
     }
 
-    // calling function to read file
-    print_file(argv[1]);
+    //chamada da função para ler o arquivo
+    print_arquivo(argv[1]);
 
     return 0;
 }

@@ -1,41 +1,38 @@
-Para o ls, usamos opendir()/readdir()/closedir() de dirent.h, que servem pra percorrer o conteúdo de um diretório (parecido com como o cat.c percorre um arquivo):
-
-c
 #include <stdio.h>
 #include <dirent.h>
 #include <string.h>
 
-// function to list contents of a directory
-int list_directory(const char* dirname) {
-    DIR *dir = opendir(dirname);
-    if (dir == NULL) {
-        perror("Unable to open directory");
+//chamado de sistema para listar o conteudo de uma pasta
+int list_pasta(const char* pastanome) {
+    PAS *pas = opendir(pastanome);
+    if (pas == NULL) {
+        perror("Não foi possível abrir a pasta");
         return 1;
     }
 
     struct dirent *entry;
-    while ((entry = readdir(dir)) != NULL) {
-        // skip "." and ".." como o ls faz por padrão
-        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+    while ((entry = readdir(pas)) != NULL) {
+        //pula "." e ".." como o ls faz por padrão
+        if (strcmp(entry->p_nome, ".") == 0 || strcmp(entry->p_nome, "..") == 0) {
             continue;
         }
-        printf("%s\n", entry->d_name);
+        printf("%s\n", entry->p_nome);
     }
 
-    // Close the directory
-    closedir(dir);
+    //fecha a pasta
+    closedir(pas);
 
     return 0;
 }
 
-// driver code
+//código da chamada
 int main(int argc, char* argv[])
 {
-    // se não passar argumento, usa o diretório atual "."
-    const char* dirname = (argc >= 2) ? argv[1] : ".";
+    //se não passar argumento, usa o diretório atual "."
+    const char* pastanome = (argc >= 2) ? argv[1] : ".";
 
-    // calling function to list directory
-    if (list_directory(dirname) != 0) {
+    //chamda da função para listar o diretório
+    if (list_pasta(pastanome) != 0) {
         return 1;
     }
 
